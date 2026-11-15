@@ -1,0 +1,27 @@
+{
+  "name": "html-purifier-ts",
+  "version": "1.0.0",
+  "description": "Spec-compliant HTML sanitizer in TypeScript: own tokenizer + tree builder with SVG/MathML namespace handling, mXSS-safe serialization",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    }
+  },
+  "scripts": {
+    "gen:entities": "node scripts/gen-entities.mjs && node scripts/extract-vectors.mjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.demo.json",
+    "test": "node --test test/",
+    "bench": "node bench/bench.ts",
+    "build": "npm run gen:entities && tsc && esbuild src/index.ts --bundle --format=esm --outfile=dist/index.bundle.js && esbuild demo/demo.ts --bundle --format=iife --outfile=demo/sanitizer-demo.bundle.js",
+    "demo": "esbuild demo/demo.ts --bundle --format=iife --outfile=demo/sanitizer-demo.bundle.js"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}
